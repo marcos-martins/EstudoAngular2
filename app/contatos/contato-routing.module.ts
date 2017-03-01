@@ -19,6 +19,7 @@ const contatoRoutes: Routes =[
     }
 ];
 
+
 @NgModule({
     imports:[
         RouterModule.forChild(contatoRoutes)
