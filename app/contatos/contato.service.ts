@@ -20,7 +20,7 @@ export class ContatoService{
 
     getContatosSlowly():Promise<Contato[]>{
         return new Promise((resolve,reject)=>{
-            setTimeout(resolve,3000);
+            setTimeout(resolve,4000);
         }).then(()=>this.getContatos());        
     }
 }
