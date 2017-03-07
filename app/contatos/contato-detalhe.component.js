@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var common_1 = require("@angular/common");
@@ -18,6 +19,7 @@ var ContatoDetalheComponent = (function () {
         this.contatoService = contatoService;
         this.route = route;
         this.location = location;
+        this.isNew = true;
     }
     ContatoDetalheComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -27,6 +29,7 @@ var ContatoDetalheComponent = (function () {
             var id = +params['id'];
             console.log(id);
             if (id) {
+                _this.isNew = false;
                 _this.contatoService.getContato(id)
                     .then(function (contato) {
                     console.log(contato);
@@ -35,8 +38,33 @@ var ContatoDetalheComponent = (function () {
             }
         });
     };
-    ContatoDetalheComponent.prototype.teste = function () {
-        console.log(this.contato);
+    ContatoDetalheComponent.prototype.getFormGroupClass = function (isValid, isPristine) {
+        return {
+            'form-group': true,
+            'has-danger': !isValid && !isPristine,
+            'has-success': isValid && !isPristine
+        };
+    };
+    ContatoDetalheComponent.prototype.getFormControlClass = function (isValid, isPristine) {
+        return {
+            'form-control': true,
+            'form-control-danger': !isValid && !isPristine,
+            'form-control-success': isValid && !isPristine
+        };
+    };
+    ContatoDetalheComponent.prototype.onSubmit = function () {
+        var _this = this;
+        var promise;
+        if (this.isNew) {
+            promise = this.contatoService.createContato(this.contato);
+        }
+        else {
+            promise = this.contatoService.updateContato(this.contato);
+        }
+        promise.then(function (contato) { return _this.goBack(); });
+    };
+    ContatoDetalheComponent.prototype.goBack = function () {
+        this.location.back();
     };
     return ContatoDetalheComponent;
 }());
